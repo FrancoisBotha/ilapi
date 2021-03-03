@@ -1,7 +1,9 @@
 // create an express app
 const express = require("express");
 var cors = require('cors')
+
 const app = express();
+app.use(cors())
 
 const { MongoClient } = require("mongodb");
 
@@ -80,8 +82,6 @@ app.get("/test", async function (req, res) {
     // await client.close();
   }
 });
-
-app.use(cors())
 
 // start the server listening for requests
 app.listen(process.env.PORT || 3000, 
