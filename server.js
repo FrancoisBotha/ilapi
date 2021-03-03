@@ -41,6 +41,33 @@ app.get("/users", async function (req, res) {
   }
 });
 
+app.get("/users/:userId", async function (req, res) {
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  
+  try {
+    await client.connect();
+
+    const database = client.db('ilume');
+    const collection = database.collection('users');
+   
+    const query = {"_id": req.params.userId };
+    const cursor = collection.find(query);
+
+    const user = await cursor.toArray();
+
+    return res.json(user);    
+   
+  } catch(err) {
+    console.log(err);
+  }
+  finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+
+});
+
+
 app.get("/test", async function (req, res) {
   try {
     return res.end('test' + process.env.MONGODB_URI);
