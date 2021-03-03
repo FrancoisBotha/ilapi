@@ -24,18 +24,11 @@ app.get("/users", async function (req, res) {
     const collection = database.collection('users');
    
     const query = {};
-    const cursor = await collection.aggregate([
-      { $match: query },
-      { $sample: { size: 5 } },
-      { $project: 
-        {
-          name: 1,
-          fav: 1
-        }
-      }
-    ]);
+    const sort = { length: -1 };
+    const limit = 11;
+    const cursor = collection.find(query).sort(sort).limit(limit);
 
-    const user = await cursor.next();
+    const user = await cursor.toArray();
 
     return res.json(user);    
    
