@@ -26,7 +26,7 @@ app.get("/users", async function (req, res) {
     const query = {};
     const cursor = await collection.aggregate([
       { $match: query },
-      { $sample: { size: 1 } },
+      { $sample: { size: 5 } },
       { $project: 
         {
           name: 1,
