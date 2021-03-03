@@ -1,6 +1,9 @@
 // create an express app
 const express = require("express");
+var cors = require('cors')
 const app = express();
+
+app.use(cors())
 
 const { MongoClient } = require("mongodb");
 
